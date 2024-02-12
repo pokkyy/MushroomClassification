@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import plotly.express as px
+from ucimlrepo import fetch_ucirepo
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-
-
 from imblearn.over_sampling import SMOTEN
 from scipy.stats import chi2_contingency
 from sklearn.metrics import roc_curve, roc_auc_score, auc
@@ -25,9 +24,37 @@ from sklearn.preprocessing import label_binarize
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import CategoricalNB
 
-st.title('Modelling')
+# GETTING DATASET
+mushroom = fetch_ucirepo(id=73)
+X = mushroom.data.features
+y = mushroom.data.targets
+raw = pd.concat([X, y], axis=1)
 
-df = pd.read_csv('data.csv')
+# extract codebook to mapping dict
+mushroom_map = {'poisonous': {'p':'poisonous', 'e':'edible'}}
+mushroom_vars = pd.DataFrame(mushroom.variables)
+
+for index, row in mushroom_vars.iloc[1:].iterrows():
+    # split the description items
+    var = str(row['name'])
+    desc = str(row['description'])
+    desc_items = desc.split(',')
+
+    if var not in mushroom_map:
+        mushroom_map[var] = {}
+
+    # add dictionary of descriptions
+    for item in desc_items:
+        value, key = item.split('=')
+        mushroom_map[var][key.strip()] = value.strip()
+df_rename = raw.copy()
+
+for col, mapping in mushroom_map.items():
+    if col in df_rename.columns:
+        df_rename[col] = df_rename[col].apply(lambda x: mapping.get(x, x))
+df = df_rename.dropna()
+
+st.title('Modelling')
 
 st.sidebar.write('Algorithms used:')
 algolist = ['Logistic Regression', 'Linear Discriminant Analysis (LDA)'

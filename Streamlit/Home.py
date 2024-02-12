@@ -52,8 +52,6 @@ with tab2:
     mushroom_map = {'poisonous': {'p':'poisonous', 'e':'edible'}}
     mushroom_vars = pd.DataFrame(mushroom.variables)
 
-    # display(mushroom.variables)
-
     for index, row in mushroom_vars.iloc[1:].iterrows():
         # split the description items
         var = str(row['name'])
@@ -75,7 +73,8 @@ with tab2:
     df = df_rename.dropna()
     st.dataframe(df)
     
-    df.describe()
+    st.header('Description of the Data')
+    st.write(df.describe())
     
     # EDA
     
