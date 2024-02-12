@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
+from ucimlrepo import fetch_ucirepo
 
 # SIDEBAR ---------------------------------------------------------------------------------------------------
 
@@ -43,7 +43,36 @@ with tab2:
             'Through this, we will find proof of commonality patterns and correlations between the property of a mushroom and their current ecological environment.')
     
     st.header('A quick glance at the data')
-    df = pd.read_csv('data.csv')
+    mushroom = fetch_ucirepo(id=73)
+    X = mushroom.data.features
+    y = mushroom.data.targets
+    raw = pd.concat([X, y], axis=1)
+
+    # extract codebook to mapping dict
+    mushroom_map = {'poisonous': {'p':'poisonous', 'e':'edible'}}
+    mushroom_vars = pd.DataFrame(mushroom.variables)
+
+    # display(mushroom.variables)
+
+    for index, row in mushroom_vars.iloc[1:].iterrows():
+        # split the description items
+        var = str(row['name'])
+        desc = str(row['description'])
+        desc_items = desc.split(',')
+
+        if var not in mushroom_map:
+            mushroom_map[var] = {}
+
+        # add dictionary of descriptions
+        for item in desc_items:
+            value, key = item.split('=')
+            mushroom_map[var][key.strip()] = value.strip()
+    df_rename = raw.copy()
+
+    for col, mapping in mushroom_map.items():
+        if col in df_rename.columns:
+            df_rename[col] = df_rename[col].apply(lambda x: mapping.get(x, x))
+    df = df_rename.dropna()
     st.dataframe(df)
     
     df.describe()
