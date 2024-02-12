@@ -7,3 +7,5 @@ seaborn
 streamlit
 plotly.express
 ucimlrepo
+imbalanced-learn
+scipy
