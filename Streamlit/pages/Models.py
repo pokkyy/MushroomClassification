@@ -68,7 +68,7 @@ algolist = ['Logistic Regression', 'Linear Discriminant Analysis (LDA)'
 for name in algolist:
     st.sidebar.write(name)
 
-tab1, tab2, tab3 = st.tabs(["Pre-processing", "Models", "Evaluation with ROC"])
+tab1, tab2, tab3 = st.tabs(["Pre-processing", "Models", "Comparision and Evaluation of Models"])
 
 with tab1:
     st.title('Pre-processing')
@@ -873,7 +873,8 @@ with tab2:
 
         accuracy_results.append(['Gaussian Naive Bayes',  Gnb.score(X_val_le, y_val), Gnb.score(X_test_le, y_test)])
         accuracy_results.append(['Categorical Naive Bayes',  Cnb.score(X_val_le, y_val), Cnb.score(X_test_le, y_test)])
-    
+
+with tab3:
     st.header('Accuracy Comparision')
     results_table = pd.DataFrame(accuracy_results, columns=['Model', 'Validation Accuracy', 'Testing Accuracy'])
     st.dataframe(results_table)
@@ -881,8 +882,8 @@ with tab2:
     st.subheader('SVM')
     st.dataframe(gamma_predval_accuracyscore)
     st.dataframe(kernels_predval_accuracyscore)
-
-with tab3:
+    
+    st.header('ROC Evaluation')
     with st.expander('Logistic Regression'):
         print_ROC_scores(y_test, y_proba_log)
         plot_ROC_curve(y_test, y_proba_log, 'Logistic Regression')
