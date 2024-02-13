@@ -349,7 +349,6 @@ with tab2:
             scores[i] = accuracy
 
         sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-        st.write(sorted_scores[:10]) # displaying top 10
 
         n_vals = [item[0] for item in sorted_scores]
         acc_vals = [item[1] for item in sorted_scores]
@@ -365,6 +364,8 @@ with tab2:
 
         # Use Streamlit to display the plot
         st.pyplot(fig, use_container_width=True)
+        st.write('Top scores and n value', sorted_scores[:10]) # displaying top 10
+
         
         st.header('Training and Validation')
         clf_RF = RandomForestClassifier(n_estimators=best_n_estimator, random_state=0)
