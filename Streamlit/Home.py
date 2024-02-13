@@ -247,11 +247,11 @@ with tab2:
     all_vars = [cap_vars, gill_vars, stalk_vars, veil_vars, ring_vars, pop_vars, other_vars]
     interactive_titles = ['Cap', 'Gill', 'Stalk', 'Veil', 'Ring', 'Population', 'Other']
     
-    # for title, vars in zip(interactive_titles, all_vars):
-    #     with st.expander(f'Interactive Countplot of Mushroom {title} Variables'):
-    #         for col in vars:
-    #             fig = px.histogram(df, x=col, color='poisonous', title=f'Countplot of {col}', barmode='group')
-    #             st.plotly_chart(fig, use_container_width=True)
+    for title, vars in zip(interactive_titles, all_vars):
+        with st.expander(f'Interactive Countplot of Mushroom {title} Variables'):
+            for col in vars:
+                fig = px.histogram(df, x=col, color='poisonous', title=f'Countplot of {col}', barmode='group')
+                st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
     st.write('CONCLUSION')
