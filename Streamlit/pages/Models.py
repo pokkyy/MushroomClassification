@@ -24,37 +24,41 @@ from sklearn.preprocessing import label_binarize
 from sklearn.naive_bayes import GaussianNB
 from sklearn.naive_bayes import CategoricalNB
 
-# GETTING DATASET
-mushroom = fetch_ucirepo(id=73)
-X = mushroom.data.features
-y = mushroom.data.targets
-raw = pd.concat([X, y], axis=1)
+def get_data():
+    # GETTING DATASET
+    mushroom = fetch_ucirepo(id=73)
+    X = mushroom.data.features
+    y = mushroom.data.targets
+    raw = pd.concat([X, y], axis=1)
 
-# extract codebook to mapping dict
-mushroom_map = {'poisonous': {'p':'poisonous', 'e':'edible'}}
-mushroom_vars = pd.DataFrame(mushroom.variables)
+    # extract codebook to mapping dict
+    mushroom_map = {'poisonous': {'p':'poisonous', 'e':'edible'}}
+    mushroom_vars = pd.DataFrame(mushroom.variables)
 
-for index, row in mushroom_vars.iloc[1:].iterrows():
-    # split the description items
-    var = str(row['name'])
-    desc = str(row['description'])
-    desc_items = desc.split(',')
+    for index, row in mushroom_vars.iloc[1:].iterrows():
+        # split the description items
+        var = str(row['name'])
+        desc = str(row['description'])
+        desc_items = desc.split(',')
 
-    if var not in mushroom_map:
-        mushroom_map[var] = {}
+        if var not in mushroom_map:
+            mushroom_map[var] = {}
 
-    # add dictionary of descriptions
-    for item in desc_items:
-        value, key = item.split('=')
-        mushroom_map[var][key.strip()] = value.strip()
-df_rename = raw.copy()
+        # add dictionary of descriptions
+        for item in desc_items:
+            value, key = item.split('=')
+            mushroom_map[var][key.strip()] = value.strip()
+    df_rename = raw.copy()
 
-for col, mapping in mushroom_map.items():
-    if col in df_rename.columns:
-        df_rename[col] = df_rename[col].apply(lambda x: mapping.get(x, x))
-df = df_rename.dropna()
+    for col, mapping in mushroom_map.items():
+        if col in df_rename.columns:
+            df_rename[col] = df_rename[col].apply(lambda x: mapping.get(x, x))
+    df = df_rename.dropna()
+    
+    return df
 
-st.title('Modelling')
+# PAGE START --------------------------------
+st.title("**Classification Techniques for Mushroom Dataset 🍄**")
 
 st.sidebar.write('Algorithms used:')
 algolist = ['Logistic Regression', 'Linear Discriminant Analysis (LDA)'
@@ -68,6 +72,7 @@ tab1, tab2, tab3 = st.tabs(["Pre-processing", "Models", "Evaluation with ROC"])
 
 with tab1:
     st.title('Pre-processing')
+    df = get_data()
     
     # SMOTEN
     target = 'habitat'
@@ -217,13 +222,16 @@ def plot_ROC_curve(y_test, y_score, algotitle):
     st.pyplot(fig, use_container_width=True)
 
 
-accuracy_results = []
+accuracy_results = []    
 
 # DATA MINING MODELS ----------------------------------------------------------------
 with tab2:
     st.title('Models')
+    st.write('Here\'s a look at all the classification techniques we had used in this project!')
+    st.write('_Due to the amount of computations going on in the background, Streamlit may take a while to load. Your patience is much appreciated! ⭐_')
     
     # LOGISTIC REGRESSION --------------------------------------------------------------------------------------------------------------------------------
+    st.header('Logistic Regression')
     with st.expander('Logistic Regression'):
         st.header('Training and Validation')
         logistic_model = LogisticRegression(max_iter=1000)
@@ -273,6 +281,7 @@ with tab2:
         y_proba_log = logistic_model.predict_proba(X_test_onehot)
     
     # LDA --------------------------------------------------------------------------------------------------------------------------------
+    st.header('Linear Discriminant Analysis')
     with st.expander('Linear Discriminant Analysis'):
         # Apply Linear Discriminant Analysis (LDA)
         lda = LDA()
@@ -323,6 +332,7 @@ with tab2:
         y_proba_lda = logistic_model.predict_proba(X_test_lda)
             
     # RANDOM FOREST ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    st.header('Random Forest Classification')
     with st.expander('Random Forest'):
         st.header('Finding Best N_Estimators')
         # finding best n_estimators
@@ -444,7 +454,7 @@ with tab2:
         y_proba_rf = clf_RF.predict_proba(X_test_onehot)
 
 
-
+    st.header('Support Vector Machine (SVM)')
     with st.expander('SVM - Kernels'):
         # different kernels available ['linear', 'poly', 'rbf', 'sigmoid', 'precomputed']
         class_labels = ['grasses', 'leaves', 'meadows', 'paths', 'urban', 'woods']
@@ -764,7 +774,8 @@ with tab2:
 
         st.write("\nMaximum Prediction Accuracy Score:")
         st.write(max_testacc_row)
-        
+    
+    st.header('Naive Bayes')        
     with st.expander('Gaussian Naive Bayes'):
         st.header('Training and Validation')
         Gnb = GaussianNB()
