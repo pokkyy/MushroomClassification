@@ -98,8 +98,9 @@ with tab1:
     st.write('Testing set: ', y_test.shape)
     
     results = []
-
+    
     with st.expander('Chi-square analysis'):
+        keep = []
         for col in X.columns:
             ct_table_ind = pd.crosstab(X[col], y)
 
@@ -110,12 +111,17 @@ with tab1:
             alpha = 0.05
             result = 'Dependent (reject H0)' if p <= alpha else 'Independent (H0 holds true)'
 
+            if p <= alpha:
+                keep.append(col)
+
             # Append results to the list
             results.append([col, c_stat, p, result])
 
         # Display the DataFrame
         chi_df = pd.DataFrame(results, columns=['Variable', 'Chi2 Statistic', 'P-value', 'Result'])
         st.dataframe(chi_df)
+        
+        X = X[keep]
 
 # ENCODING ----------------------------------------------------------------
 onehotEncoder = OneHotEncoder()
