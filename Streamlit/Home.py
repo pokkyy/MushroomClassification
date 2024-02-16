@@ -66,6 +66,17 @@ X_res, y_res = sampler.fit_resample(X, y)
 X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=1)
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.125, random_state=1)
 
+keep = []
+for col in X.columns:
+    ct_table_ind = pd.crosstab(X[col], y)
+    c_stat, p, dof, expected = chi2_contingency(ct_table_ind)
+    alpha = 0.05
+    
+    if p <= alpha:
+        keep.append(col)
+
+X = X[keep]
+
 features = [""] * 22 
 
 def features_input():
