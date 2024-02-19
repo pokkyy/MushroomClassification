@@ -248,16 +248,17 @@ with tab2:
     
     # EDA
     st.header('Exploratory Data Analysis')
+
     cap_vars = df.columns[:3]
     gill_vars = df.columns[5:9]
     stalk_vars = df.columns[9:15]
     veil_vars = df.columns[15:17]
     ring_vars = df.columns[17:19]
-    # pop_vars = df.columns[20:-1] # 'pop' = population, and habitat
-    other_vars = ['population', 'bruises', 'odor', 'spore-print-color']
+    pop_vars = ['population', 'poisonous'] # 'pop' = population, and poisonous
+    other_vars = ['bruises', 'odor', 'spore-print-color']
     
-    all_vars = [cap_vars, gill_vars, stalk_vars, veil_vars, ring_vars, other_vars]
-    interactive_titles = ['Cap', 'Gill', 'Stalk', 'Veil', 'Ring', 'Other']
+    all_vars = [cap_vars, gill_vars, stalk_vars, veil_vars, ring_vars, pop_vars, other_vars]
+    interactive_titles = ['Cap', 'Gill', 'Stalk', 'Veil', 'Ring', 'Population and Poisonous Factor', 'Bruises, Odour, and Spore Print Colour']
     
     for title, vars in zip(interactive_titles, all_vars):
         with st.expander(f'Interactive Countplot of Mushroom {title} Variables'):
