@@ -60,12 +60,6 @@ target = ['habitat']
 X = df.drop(columns=target)
 y = df['habitat']
 
-# Preparing the dataset
-sampler = SMOTEN(random_state=0)
-X_res, y_res = sampler.fit_resample(X, y)
-X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=1)
-X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.125, random_state=1)
-
 keep = []
 for col in X.columns:
     ct_table_ind = pd.crosstab(X[col], y)
@@ -79,6 +73,12 @@ X = X[keep]
 features_count = len(X.columns)
 
 features = [""] * features_count
+
+# Preparing the dataset
+sampler = SMOTEN(random_state=0)
+X_res, y_res = sampler.fit_resample(X, y)
+X_train, X_test, y_train, y_test = train_test_split(X_res, y_res, test_size=0.2, random_state=1)
+X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.125, random_state=1)
 
 def features_input():
     feature_select = [item for item in X.columns if item != 'habitat']
