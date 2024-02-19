@@ -76,8 +76,9 @@ for col in X.columns:
         keep.append(col)
 
 X = X[keep]
+features_count = len(X.columns)
 
-features = [""] * len(X.columns)
+features = [""] * features_count
 
 def features_input():
     feature_select = [item for item in X.columns if item != 'habitat']
