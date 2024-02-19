@@ -77,7 +77,7 @@ for col in X.columns:
 
 X = X[keep]
 
-features = [""] * 22 
+features = [""] * len(X.columns)
 
 def features_input():
     feature_select = [item for item in X.columns if item != 'habitat']
