@@ -253,16 +253,16 @@ with tab2:
     stalk_vars = df.columns[9:15]
     veil_vars = df.columns[15:17]
     ring_vars = df.columns[17:19]
-    pop_vars = df.columns[20:-1] # 'pop' = population, and habitat
-    other_vars = ['bruises', 'odor', 'spore-print-color']
+    # pop_vars = df.columns[20:-1] # 'pop' = population, and habitat
+    other_vars = ['population', 'bruises', 'odor', 'spore-print-color']
     
-    all_vars = [cap_vars, gill_vars, stalk_vars, veil_vars, ring_vars, pop_vars, other_vars]
-    interactive_titles = ['Cap', 'Gill', 'Stalk', 'Veil', 'Ring', 'Population', 'Other']
+    all_vars = [cap_vars, gill_vars, stalk_vars, veil_vars, ring_vars, other_vars]
+    interactive_titles = ['Cap', 'Gill', 'Stalk', 'Veil', 'Ring', 'Other']
     
     for title, vars in zip(interactive_titles, all_vars):
         with st.expander(f'Interactive Countplot of Mushroom {title} Variables'):
             for col in vars:
-                fig = px.histogram(df, x=col, color='poisonous', title=f'Countplot of {col}', barmode='group')
+                fig = px.histogram(df, x=col, color='habitat', title=f'Countplot of {col}', barmode='group')
                 st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
