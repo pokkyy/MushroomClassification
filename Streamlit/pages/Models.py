@@ -68,7 +68,7 @@ algolist = ['Logistic Regression', 'Linear Discriminant Analysis (LDA)'
 for name in algolist:
     st.sidebar.write(name)
 
-tab1, tab2, tab3 = st.tabs(["Pre-processing", "Models", "Comparision and Evaluation of Models"])
+tab1, tab2, tab3 = st.tabs(["Pre-processing", "Models", "Comparison and Evaluation of Models"])
 
 with tab1:
     st.title('Pre-processing')
@@ -700,7 +700,7 @@ with tab2:
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
             
-    with st.expander('SVM - Comparision of each Kernal and Gamma Values'):
+    with st.expander('SVM - Comparison of each Kernal and Gamma Values'):
         # Displaying the different kernels and different value for gammas
         gamma_predval_accuracyscore = pd.DataFrame(list(zip(kernel, kernel_gammas, kernel_gammas_valacc, kernel_gammas_testacc )), columns=['Kernel', 'Gamma Value', 'Validation Accuracy Score', 'Prediction Accuracy Score'])
         st.dataframe(gamma_predval_accuracyscore)
@@ -881,7 +881,7 @@ with tab2:
         accuracy_results.append(['Categorical Naive Bayes',  Cnb.score(X_val_le, y_val), Cnb.score(X_test_le, y_test)])
 
 with tab3:
-    st.header('Accuracy Comparision')
+    st.header('Accuracy Comparison')
     results_table = pd.DataFrame(accuracy_results, columns=['Model', 'Validation Accuracy', 'Testing Accuracy'])
     st.dataframe(results_table)
     

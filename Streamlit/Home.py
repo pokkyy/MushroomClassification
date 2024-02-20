@@ -267,7 +267,34 @@ with tab2:
                 st.plotly_chart(fig, use_container_width=True)
 
 with tab3:
-    st.write('CONCLUSION')
+    st.write('The Audobon Society Field Guide explicitly states that there is no clear-cut way to determine whether a mushroom is poisonous or not simply by visuals alone. ' +
+             'The solution towards this was instead classifying and predicting the appearance of mushrooms in a habitat. ' +
+             'There is insufficient data to be able to determine whether a mushroom would have a poisonous attribute or not, thus the inquiry of the edibility of a mushroom is left ambiguous.')
+    st.write('Despite studies that claim Random Forest Classification was an apt tool to identify poisonous mushrooms, the findings show that in the case of habitats, ' +
+             'it was unable to provide the same efficiency. This shows that the model was unable to properly match each characteristic to its likely habitat.')
+    st.write('The end results of this project has concluded that Support Vector Machine (SVM) with rbf kernel achieved the highest accuracy scoring, that is 0.872618, ' +
+             'alongside garnering an AUC score of 0.99 and 0.97 for micro and macro average respectively. ' +
+             'It has been shown as the most reliable technique in predicting the Mushroom\'s habitat throughout this project, proving that it is an all-around efficient algorithm to handle multi-classification tasks.')
+    
+    with st.expander('Limitations'):
+        st.write('Due to time constraints, the SVM Polynomial kernel was not configured with the same gamma values as the other kernels. ' +
+                 'This was due to the increased computational demand associated with adjusting gamma values, necessitating higher computational resources. ' +
+                 'As a result, the full exploration of SVM Polynomial\'s performance under varying gamma values was not feasible within the scope of this study. ' +
+                 'Enhanced computational power would be required to thoroughly investigate the impact of different gamma values on its performance.')
+        st.write('More explorations regarding logistic regression, LDA, and Naive Bayes could have been performed but due to the amount of existing algorithms handled inside this project, ' +
+                'additional hyperparameter testing could not have been conducted. Moreover, differences in comprehension of these algorithms among project members impeded development. ' +
+                'Therefore, a considerable amount of time in the project schedule was spent on educating team members who did not have a thorough grasp of the algorithms.')
+    
+    with st.expander('Future Work'):
+        st.write('Despite the datasets\' original purpose of  finding edibility of mushrooms, the project takes another approach by opening doors to a fresh perspective on old data by taking the habitat ' +
+                'variable instead as opposed to the edibility variable. A new outlook towards this dataset would provide additional insights and a variety of research opportunities to explore the relations ' +
+                'between other characteristics of a mushroom with one another.')
+        st.write('Additional opportunities for future research lie in the exploration of the Secondary Mushroom Dataset provided by Wagner, Dennis, Heider, D., and Hattab, Georges (2023). ' +
+                'This dataset comprises 61,069 hypothetical mushrooms with distinctive caps representing 173 species, with an average of 353 mushrooms per species. ' +
+                'Each mushroom is categorised as definitely edible, definitely poisonous, or of unknown edibility and not recommended but the latter class merged with the poisonous class ' +
+                'which is similar to the current dataset thus complementing the original dataset. ' +
+                'Analysing this additional dataset offers an opportunity to evaluate the consistency and applicability of the identified patterns and insights across ' +
+                'diverse data mining techniques used, thereby enhancing the reliability and practicality of our conclusions.')
 
 with tab4:
     st.title('Where would I find this mushroom?')
