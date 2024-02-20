@@ -781,6 +781,22 @@ with tab2:
 
         st.write("\nMaximum Prediction Accuracy Score:")
         st.write(max_testacc_row)
+                
+        # Fit in SVC
+        svc = svm.SVC(kernel='rbf', gamma='auto').fit(X_train_onehot, y_train)
+
+        # Validation Accuraccy
+        val_accuracy = svc.score(X_val_onehot.toarray(), y_val)
+
+        # Test Accuracy
+        y_pred = svc.predict(X_test_onehot)
+        pred_accuracy = accuracy_score(y_test, y_pred)
+
+        print('Support Vector Machine (RBF)')
+        print('Training accuracy: ', val_accuracy)
+        print('Validation accuracy: ', pred_accuracy,'\n')
+
+        accuracy_results.append(['Support Vector Machine (RBF)', val_accuracy, pred_accuracy])
     
     st.header('Naive Bayes')        
     with st.expander('Gaussian Naive Bayes'):
