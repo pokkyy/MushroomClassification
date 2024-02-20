@@ -270,11 +270,14 @@ with tab3:
     st.write('The Audobon Society Field Guide explicitly states that there is no clear-cut way to determine whether a mushroom is poisonous or not simply by visuals alone. ' +
              'The solution towards this was instead classifying and predicting the appearance of mushrooms in a habitat. ' +
              'There is insufficient data to be able to determine whether a mushroom would have a poisonous attribute or not, thus the inquiry of the edibility of a mushroom is left ambiguous.')
-    st.write('Despite studies that claim Random Forest Classification was an apt tool to identify poisonous mushrooms, the findings show that in the case of habitats, ' +
-             'it was unable to provide the same efficiency. This shows that the model was unable to properly match each characteristic to its likely habitat.')
+    
+    st.write('From our findings, we are able to distinguish mushroom habitats which would provide a guide towards mycology in terms of narrowing their scope of research in order to find potentially useful mushrooms. ' +
+             'A breakdown of a general idea of where they could find these mushrooms based on exterior looks alone would be beneficial as most mushrooms are under a mycelium network, that is an underground structure.')
+    
     st.write('The end results of this project has concluded that Support Vector Machine (SVM) with rbf kernel achieved the highest accuracy scoring, that is 0.872618, ' +
-             'alongside garnering an AUC score of 0.99 and 0.97 for micro and macro average respectively. ' +
-             'It has been shown as the most reliable technique in predicting the Mushroom\'s habitat throughout this project, proving that it is an all-around efficient algorithm to handle multi-classification tasks.')
+             'alongside garnering an AUC score of 0.99 and 0.97 for micro and macro average respectively. It has been shown as the most reliable technique in predicting the Mushroom\'s habitat throughout this project, ' +
+             'proving that it is an all-around efficient algorithm to handle multi-classification tasks.')
+
     
     with st.expander('Limitations'):
         st.write('Due to time constraints, the SVM Polynomial kernel was not configured with the same gamma values as the other kernels. ' +
